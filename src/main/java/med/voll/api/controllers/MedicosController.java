@@ -1,10 +1,8 @@
 package med.voll.api.controllers;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.medico.DatosListadoMedicoDTO;
-import med.voll.api.medico.DatosRegistroMedicoDTO;
-import med.voll.api.medico.Medico;
-import med.voll.api.medico.MedicoRepository;
+import med.voll.api.medico.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,13 +30,27 @@ public class MedicosController {
 
     @GetMapping
     public Page<DatosListadoMedicoDTO> listadoMedicos(@PageableDefault(size = 2) Pageable paginacion) {
-        return medicoRepository.findAll(paginacion).map(DatosListadoMedicoDTO::new);
+//        return medicoRepository.findAll(paginacion).map(DatosListadoMedicoDTO::new);
+        return medicoRepository.findByActivoTrue(paginacion).map(DatosListadoMedicoDTO::new);
 
     }
 
-    @PutMapping("/{id}")
-    public void actualizarMedico(@PathVariable Long id) {
+    @PutMapping
+    @Transactional
+    public void actualizarMedico(@RequestBody @Valid DatosActualizarMedicoDTO datosActualizarMedicoDTO) {
 
+        System.out.println(datosActualizarMedicoDTO);
+        Medico medico = medicoRepository.getReferenceById(datosActualizarMedicoDTO.id());
+        medico.actualizarDatos(datosActualizarMedicoDTO);
+    }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public String eliminarMedico(@PathVariable Long id ){
+
+        Medico medico = medicoRepository.getReferenceById(id);
+//        medicoRepository.delete(medico);        //Hard-delete.
+        medico.desactivarMedico();           //Soft-delete
+        return "medico borrado " + id;
     }
 }

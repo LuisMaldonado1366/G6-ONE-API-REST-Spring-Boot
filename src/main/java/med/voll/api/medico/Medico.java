@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.direccion.Direccion;
 
-import java.lang.reflect.Type;
-
 @Table(name = "medicos")
 @Entity(name = "medico")
 @Getter
@@ -25,6 +23,7 @@ public class Medico {
     private String email;
     private String telefono;
     private String documento;
+    private Boolean activo;
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
     @Embedded
@@ -32,6 +31,7 @@ public class Medico {
 
 
     public Medico(DatosRegistroMedicoDTO datosRegistroMedicoDTO) {
+        this.activo = true;
         this.nombre = datosRegistroMedicoDTO.nombre();
         this.email = datosRegistroMedicoDTO.email();
         this.telefono = datosRegistroMedicoDTO.telefono();
@@ -48,47 +48,32 @@ public class Medico {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
     public Especialidad getEspecialidad() {
         return especialidad;
     }
 
-    public void setEspecialidad(Especialidad especialidad) {
-        this.especialidad = especialidad;
+    public void actualizarDatos(DatosActualizarMedicoDTO datosActualizarMedicoDTO) {
+        if (datosActualizarMedicoDTO.nombre() != null){
+            this.nombre = datosActualizarMedicoDTO.nombre();
+        }
+        if (datosActualizarMedicoDTO.documento() != null){
+            this.documento = datosActualizarMedicoDTO.documento();
+        }
+        if (datosActualizarMedicoDTO.direccion() != null){
+            this.direccion = direccion.actualizarDireccion(datosActualizarMedicoDTO.direccion());
+        }
+
     }
 
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
+    public void desactivarMedico() {
+        this.activo = false;
     }
 }
