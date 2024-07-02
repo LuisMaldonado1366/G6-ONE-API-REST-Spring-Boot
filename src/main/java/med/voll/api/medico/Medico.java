@@ -60,6 +60,18 @@ public class Medico {
         return especialidad;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
     public void actualizarDatos(DatosActualizarMedicoDTO datosActualizarMedicoDTO) {
         if (datosActualizarMedicoDTO.nombre() != null){
             this.nombre = datosActualizarMedicoDTO.nombre();

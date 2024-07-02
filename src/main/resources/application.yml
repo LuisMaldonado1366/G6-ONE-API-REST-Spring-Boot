@@ -18,5 +18,7 @@ spring:
     show-sql: true
     format-sql: true
 server:
+  error:
+    include-stacktrace: never
   host: ${API_HOST}
   port: ${API_PORT}
