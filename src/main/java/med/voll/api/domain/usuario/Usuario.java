@@ -1,4 +1,4 @@
-package med.voll.api.domain.usuarios;
+package med.voll.api.domain.usuario;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +28,10 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
