@@ -1,4 +1,4 @@
-package med.voll.api.controllers;
+package med.voll.api.controller;
 
 import jakarta.validation.Valid;
 import med.voll.api.domain.usuario.DatosAutenticacionUsuarioDTO;

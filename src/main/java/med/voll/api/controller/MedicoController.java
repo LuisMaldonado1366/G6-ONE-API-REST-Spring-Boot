@@ -1,4 +1,4 @@
-package med.voll.api.controllers;
+package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -17,7 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/medicos")
-public class MedicosController {
+public class MedicoController {
 
     @Autowired
     private MedicoRepository medicoRepository;
