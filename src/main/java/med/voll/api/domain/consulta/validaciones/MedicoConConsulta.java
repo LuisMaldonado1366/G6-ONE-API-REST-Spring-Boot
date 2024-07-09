@@ -3,9 +3,13 @@ package med.voll.api.domain.consulta.validaciones;
 import jakarta.validation.ValidationException;
 import med.voll.api.domain.consulta.ConsultaRepository;
 import med.voll.api.domain.consulta.DatosAgendarConsultaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class MedicoConConsulta {
+@Component
+public class MedicoConConsulta implements ValidadorDeConsultas {
 
+    @Autowired
     private ConsultaRepository repository;
 
     public void validar(DatosAgendarConsultaDTO datos) {
@@ -13,7 +17,7 @@ public class MedicoConConsulta {
         if (datos.idMedico() == null)
             return;
 
-        var medicoConConsulta = repository.existMedicoIdAndFecha(datos.idMedico(), datos.fecha());
+        var medicoConConsulta = repository.existsByMedicoIdAndFecha(datos.idMedico(), datos.fecha());
 
         if (medicoConConsulta) {
             throw new ValidationException("Este médico no está disponible en el horario seleccionado.");

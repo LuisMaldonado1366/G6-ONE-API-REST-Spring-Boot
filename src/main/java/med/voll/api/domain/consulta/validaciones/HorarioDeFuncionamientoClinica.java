@@ -2,10 +2,14 @@ package med.voll.api.domain.consulta.validaciones;
 
 import jakarta.validation.ValidationException;
 import med.voll.api.domain.consulta.DatosAgendarConsultaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 
-public class HorarioDeFuncionamientoClinica {
+@Component
+public class HorarioDeFuncionamientoClinica implements ValidadorDeConsultas {
+
 
     public void validar(DatosAgendarConsultaDTO datos) {
         var domingo = DayOfWeek.SUNDAY.equals(datos.fecha().getDayOfWeek());
